@@ -41,7 +41,7 @@ while o!=2:
         [Zielzeit, Dauer, Fertigmachen, Verzögerungen]
     ]  
 
-    file = open("D:\\Users\\BKU\\MichaelAEWagner\\Desktop\\WakeApp\\test.csv", 'w') 
+    file = open(test.csv", 'w') 
 
     with file:
         writer = csv.writer(file)

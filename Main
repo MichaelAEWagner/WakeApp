@@ -1,0 +1,57 @@
+# passende Dokumenten (Klassendiagramm, ERM, ...)
+# textbasierte Anwendung für die Konsole/das Terminal.
+# notwendige Daten (Ankunftszeit/Zielzeit, Dauer des Fahrtweges,
+# benötigte Zeit zum Fertigmachen am Morgen, weitere Verzögerungen) abfragen.
+# Weckzeit berechnen.
+# benutzerfreundliche Menüführung. Eine Berechnung kann mehrfach ausgeführt werden.
+# mögliche Fehleingaben abfangen <<<< DAS MUSS NOCH
+# Programmtest
+# Speichern der eingegebenen Daten in einer Datenbank oder Datei, sodass diese App <<<<< DAS MUSS NOCH
+# beim nächsten Start des Programms wieder zur Verfügung stehen.
+# Abgabe über Versionskontrollsystem GIT.
+
+from datetime import time
+import csv
+
+o=1
+while o!=2:
+
+    print(" Herzlich Willkommen zur WakeApp ")
+    date_entry = input('Gib deine Zielzeit an im HH:MM Format an:  ')
+    Stunde, Minute = map(int, date_entry.split(':'))
+    Zielzeit = time(Stunde,Minute)
+    Dauer = int(input("Wie lange dauert der Weg in min?"))
+    Fertigmachen = int(input("Wie lange brauchst du zum Fertigmachen in min?"))
+    Verzögerungen = int(input("Mit wie viel Verzögerung planst du in min?"))
+    x = Dauer + Fertigmachen + Verzögerungen
+    h= x//60
+    min = x%60
+    Wegzeit = time(h, min)
+    Weckh = h + Stunde
+    Weckmin = min + Minute
+    if Weckmin >= 60:
+        Weckmin = Weckmin%60
+        Weckh = Weckh + x//60
+    if Weckh >= 24:
+        Weckh = Weckmin%24
+    
+    Weckzeit = time(Weckh,Weckmin)
+
+    toWrite = [
+        [Zielzeit, Dauer, Fertigmachen, Verzögerungen]
+    ]  
+
+    file = open("D:\\Users\\BKU\\MichaelAEWagner\\Desktop\\WakeApp\\test.csv", 'w') 
+
+    with file:
+        writer = csv.writer(file)
+
+        for row in toWrite:
+            writer.writerow(row)
+
+    with open("D:\\Users\\BKU\\MichaelAEWagner\\Desktop\\WakeApp\\test.csv", newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            print()
+
+    print("Zielzeit:", Zielzeit,"Weckzeit:", Weckzeit, "Wegzeit:", Wegzeit)
